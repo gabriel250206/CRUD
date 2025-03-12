@@ -53,7 +53,7 @@ export class HomePage implements OnInit {
     });
   }
   toggleCompleted(id: string, event: Event): void {
-    const inputElement = event.target as HTMLInputElement; // Asegura que es un HTMLInputElement
+    const inputElement = event.target as HTMLInputElement; 
     const completed = inputElement.checked;
   
     this.taskService.updateTask(id, { completed }).then(() => {
