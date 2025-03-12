@@ -1,20 +1,45 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content padding style="background-color: black">
+  <h2 style="color: yellow">Lista</h2>
+  <input #nameInput type="text" placeholder="Nombre" />
+  <input #dayInput type="date" placeholder="Día" />
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <button
+    style="color: blue"
+    (click)="addItem(nameInput.value, dayInput.value); nameInput.value = ''; dayInput.value = '';"
+  >
+    Agregar
+  </button>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <table
+    border="1"
+    style="margin-top: 20px; width: 100%; text-align: left; color: white"
+  >
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Día</th>
+        <th>Completado</th>
+        <th>Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of tasks$ | async">  <!-- 🔥 Ahora usa Firestore en tiempo real -->
+    <td>{{ item.id }}</td>
+    <td><input type="text" [(ngModel)]="item.name" /></td>
+    <td><input type="date" [(ngModel)]="item.day" /></td>
+    <td>
+      <input
+        type="checkbox"
+        [checked]="item.completed"
+        (change)="toggleCompleted(item.id!, $event)"
+      />
+    </td>
+    <td>
+      <button (click)="deleteItem(item.id!)">❌ Eliminar</button>
+      <button (click)="editTask(item.id!, item.name, item.day)">💾 Guardar</button>
+    </td>
+  </tr>
+    </tbody>
+  </table>
 </ion-content>
